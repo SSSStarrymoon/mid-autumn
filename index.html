@@ -202,40 +202,6 @@ body{
   animation:heartBeat 1.2s ease-in-out infinite;
 }
 
-.mooncake-hotspot{
-  position:absolute !important;
-  z-index:999 !important;
-
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-
-  background:red !important;
-  border:5px solid yellow !important;
-}
-
-
-/* 三个月饼的位置 */
-.mooncake1{
-  left:100px;
-  top:1300px;
-  width:250px;
-  height:250px;
-}
-
-.mooncake2{
-  left:415px;
-  top:1300px;
-  width:250px;
-  height:250px;
-}
-
-.mooncake3{
-  left:730px;
-  top:1300px;
-  width:250px;
-  height:250px;
-}
 
 
 /* 点击后的发光效果 */
@@ -322,9 +288,20 @@ body{
   <div class="lantern l2"></div>
   <div class="lantern l3"></div>
   <div class="vignette"></div>
-  <div class="mooncake-hotspot mooncake1" onclick="collectMooncake(1)"></div>
-  <div class="mooncake-hotspot mooncake2" onclick="collectMooncake(2)"></div>
-  <div class="mooncake-hotspot mooncake3" onclick="collectMooncake(3)"></div>
+<div class="mooncake-hotspot mooncake1"
+     style="position:absolute!important;z-index:9999!important;left:100px!important;top:300px!important;width:250px!important;height:250px!important;background:red!important;border:5px solid yellow!important;"
+     onclick="collectMooncake(1)">
+</div>
+
+<div class="mooncake-hotspot mooncake2"
+     style="position:absolute!important;z-index:9999!important;left:415px!important;top:300px!important;width:250px!important;height:250px!important;background:red!important;border:5px solid yellow!important;"
+     onclick="collectMooncake(2)">
+</div>
+
+<div class="mooncake-hotspot mooncake3"
+     style="position:absolute!important;z-index:9999!important;left:730px!important;top:300px!important;width:250px!important;height:250px!important;background:red!important;border:5px solid yellow!important;"
+     onclick="collectMooncake(3)">
+</div>
 
   <div class="hint">✦ 月圆 · 花香 · 灯暖 · 团圆 ✦</div>
 
