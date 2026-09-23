@@ -678,6 +678,101 @@ body{
 
 }
 
+/* ==========================================
+   第二阶段：能量条
+========================================== */
+
+#energyBar{
+
+  /* 初始隐藏 */
+  display:none;
+
+  position:absolute;
+
+  left:60px;
+  right:60px;
+
+  bottom:25px;
+
+  height:42px;
+
+  z-index:30;
+
+  overflow:hidden;
+
+  border-radius:24px;
+
+  border:2px solid rgba(255,235,170,.65);
+
+  background:rgba(5,15,42,.78);
+
+  box-shadow:
+    0 0 15px rgba(255,220,120,.20),
+    inset 0 0 12px rgba(0,0,0,.45);
+
+}
+
+
+/* 能量填充 */
+
+#energyBarFill{
+
+  position:absolute;
+
+  left:0;
+  top:0;
+
+  width:0%;
+
+  height:100%;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,190,70,.75),
+      rgba(255,235,145,.95)
+    );
+
+  box-shadow:
+    0 0 12px rgba(255,220,100,.75),
+    0 0 28px rgba(255,195,60,.45);
+
+  transition:
+    width .25s ease-out;
+
+}
+
+
+/* 能量文字 */
+
+#energyText{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  z-index:2;
+
+  color:#fff4c8;
+
+  font-size:17px;
+
+  font-weight:600;
+
+  letter-spacing:2px;
+
+  text-shadow:
+    0 2px 6px rgba(0,0,0,.75);
+
+}
+  
   
 /* No desktop layout and no landscape layout:
    the Reno12 portrait canvas remains the design target. */
@@ -731,6 +826,51 @@ body{
     </div>
   </div>
 </div>
+<!-- ==========================================
+     第二阶段：新的点击热区
+     ========================================== -->
+
+<div
+  id="energyHotspot"
+  onclick="chargeEnergy()"
+  style="
+    display:none!important;
+
+    position:absolute!important;
+    z-index:9999!important;
+
+    left:400px!important;
+    top:1050px!important;
+
+    width:280px!important;
+    height:280px!important;
+
+    background:red!important;
+    border:5px solid yellow!important;
+
+    cursor:pointer!important;
+  "
+>
+</div>
+
+
+<!-- ==========================================
+     第二阶段：能量条
+     ========================================== -->
+
+<div id="energyBar">
+
+  <!-- 能量填充 -->
+  <div id="energyBarFill"></div>
+
+  <!-- 能量文字 -->
+  <div id="energyText">
+    能量：0/25
+  </div>
+
+</div>
+  
+
   
   <div class="hint">✦ 月圆 · 花香 · 灯暖 · 团圆 ✦</div>
 
