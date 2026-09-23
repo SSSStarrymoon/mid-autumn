@@ -885,57 +885,83 @@ body{
    游戏状态
 ================================= */
 
-/* 本次游戏已经找到的不同月饼 */
+
+/* 第一阶段：月饼收集 */
 const collectedMooncakes = new Set();
 
-/* 游戏是否已经彻底结束 */
-let gameFinished = false;
 
-/* 是否已经进入“3秒后等待点击”状态 */
+/* 第一阶段是否完成 */
+let mooncakeFinished = false;
+
+
+/* 是否允许点击奖励后退出 */
 let waitingForFinalClick = false;
+
+
+/* 第二阶段：能量 */
+let energy = 0;
+
+const maxEnergy = 25;
+
+
+/* 第二阶段是否完成 */
+let energyFinished = false;
+
 
 
 /* =================================
    点击月饼
 ================================= */
 
+
 function collectMooncake(number){
 
-  /* 游戏已经结束，直接禁止操作 */
-  if(gameFinished){
+
+  /* 第一阶段完成后禁止继续找月饼 */
+  if(mooncakeFinished){
     return;
   }
 
-  /* 已经点击过这个月饼，不重复计数 */
+
+  /* 防止重复点击同个月饼 */
   if(collectedMooncakes.has(number)){
     return;
   }
 
+
   const target =
     document.querySelector(".mooncake" + number);
 
-  /* 记录这个不同的月饼 */
+
   collectedMooncakes.add(number);
 
-  /* 点击后出现光晕 */
+
+
+  /*
+     月饼发光
+  */
+
   target.classList.add("collected");
 
 
-  /* =========================
-     更新计数
-  ========================= */
+
+  /*
+     更新数量
+  */
 
   const count =
     collectedMooncakes.size;
 
+
   const counter =
     document.getElementById("collectionCount");
+
 
   counter.textContent =
     "找到🥮个数：" + count + "/3";
 
 
-  /* 数字变化动画 */
+
   counter.classList.remove("update");
 
   void counter.offsetWidth;
@@ -943,146 +969,290 @@ function collectMooncake(number){
   counter.classList.add("update");
 
 
-  /* =========================
+
+  /*
      三个不同月饼全部找到
-  ========================= */
+  */
 
   if(count === 3){
+
+
+    mooncakeFinished = true;
+
 
     setTimeout(function(){
 
       finalJudgement();
 
-    }, 700);
+    },700);
+
 
   }
+
 
 }
 
 
+
+
 /* =================================
-   最终判定
+   团圆奖励动画
 ================================= */
+
 
 function finalJudgement(){
 
-  /* 防止重复触发 */
-  if(gameFinished){
-    return;
-  }
 
   const reward =
     document.getElementById("rewardPopup");
 
-  /* 显示团圆奖励 */
+
   reward.classList.add("show");
 
 
+
   /*
-     3 秒后进入“等待点击”状态
+     3秒后允许点击退出
   */
 
   setTimeout(function(){
 
     waitingForFinalClick = true;
 
-  }, 3000);
+  },3000);
+
+
 
 }
 
 
+
+
 /* =================================
-   点击任意区域 → 回到初始页面
+   点击任意位置退出奖励
 ================================= */
 
-document.addEventListener("click", function(){
 
-  /* 还没有到3秒，不执行 */
+document.addEventListener("click",function(){
+
+
+
   if(!waitingForFinalClick){
+
     return;
+
   }
 
-  /* 防止重复执行 */
-  if(gameFinished){
-    return;
-  }
-
-  /* 游戏正式结束 */
-  gameFinished = true;
-
-  /* 保存结束状态 */
-  sessionStorage.setItem(
-    "moonGameFinished",
-    "true"
-  );
 
 
-  /* 回到初始页面 */
+  waitingForFinalClick=false;
+
+
+
   resetToInitialPage();
+
+
 
 });
 
 
+
+
+
 /* =================================
-   回到初始页面
+   进入第二阶段
 ================================= */
+
 
 function resetToInitialPage(){
 
-  /* 隐藏最终奖励 */
-  const reward =
-    document.getElementById("rewardPopup");
-
-  reward.classList.remove("show");
-
-
-  /* 清除所有月饼的发光状态 */
-  document
-    .querySelectorAll(".mooncake-hotspot")
-    .forEach(function(cake){
-
-      cake.classList.remove("collected");
-
-    });
-
-
-  /* 计数恢复为初始状态 */
-  const counter =
-    document.getElementById("collectionCount");
-
-  counter.textContent =
-    "找到🥮个数：3/3";
 
 
   /*
-     注意：
-     collectedMooncakes 不重新清空。
-     
-     因为游戏已经结束，
-     后续不能再次进行游戏。
+     隐藏奖励窗口
   */
 
+  document
+  .getElementById("rewardPopup")
+  .classList.remove("show");
+
+
+
+  /*
+     保留月饼完成状态
+
+     不清除 collectedMooncakes
+
+     防止重新开始
+  */
+
+
+
+  /*
+     开启能量小游戏
+  */
+
+  startEnergyStage();
+
+
+
 }
+
+
+
 
 
 /* =================================
-   页面加载时检查游戏是否已经结束
+   第二阶段初始化
 ================================= */
 
-if(
-  sessionStorage.getItem("moonGameFinished")
-  === "true"
-){
 
-  gameFinished = true;
+function startEnergyStage(){
 
-  /*
-     游戏已经结束：
-     保持初始页面显示，
-     但不再允许进行游戏。
-  */
+
+
+  const hotspot =
+    document.getElementById("energyHotspot");
+
+
+  const bar =
+    document.getElementById("energyBar");
+
+
+
+  if(hotspot){
+
+    hotspot.style.display="block";
+
+  }
+
+
+
+  if(bar){
+
+    bar.style.display="block";
+
+  }
+
+
 
 }
+
+
+
+
+
+
+
+/* =================================
+   点击能量区域
+================================= */
+
+
+function chargeEnergy(){
+
+
+
+  /*
+     能量满后禁止继续增加
+  */
+
+  if(energyFinished){
+
+    return;
+
+  }
+
+
+
+  if(energy >= maxEnergy){
+
+    return;
+
+  }
+
+
+
+  energy++;
+
+
+
+  /*
+     更新进度
+  */
+
+
+  const fill =
+    document.getElementById("energyBarFill");
+
+
+  const text =
+    document.getElementById("energyText");
+
+
+
+  let percent =
+    energy / maxEnergy * 100;
+
+
+
+  fill.style.width =
+    percent + "%";
+
+
+
+  text.textContent =
+    "能量：" + energy + "/25";
+
+
+
+
+
+  /*
+     能量满
+  */
+
+  if(energy === maxEnergy){
+
+
+    energyFinished = true;
+
+
+
+    setTimeout(function(){
+
+
+      showScarfReward();
+
+
+
+    },500);
+
+
+  }
+
+
+}
+
+
+
+
+
+
+/* =================================
+   第二阶段奖励（暂时占位）
+================================= */
+
+
+function showScarfReward(){
+
+
+  alert("恭喜你再次获得奖励 🧣");
+
+
+}
+
+
 
 </script>
 </body>
