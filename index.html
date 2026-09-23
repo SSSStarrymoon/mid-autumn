@@ -282,7 +282,403 @@ body{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.28)}
 }
+/* ================================
+   月饼收集计数
+================================ */
 
+#collectionCount{
+  position:absolute;
+
+  /* 位于页面上方 */
+  top:90px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  z-index:20;
+
+  padding:10px 24px;
+
+  color:#fff4c7;
+
+  font-size:22px;
+  font-weight:600;
+
+  letter-spacing:2px;
+
+  white-space:nowrap;
+
+  border:1px solid rgba(255,235,170,.45);
+
+  border-radius:30px;
+
+  background:rgba(8,22,55,.55);
+
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+
+  box-shadow:
+    0 8px 25px rgba(0,0,0,.25),
+    0 0 25px rgba(255,220,130,.12);
+
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.7);
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+}
+
+
+/* 数字变化时轻微放大 */
+#collectionCount.update{
+  animation:countPop .45s ease;
+}
+
+@keyframes countPop{
+
+  0%{
+    transform:translateX(-50%) scale(1);
+  }
+
+  45%{
+    transform:translateX(-50%) scale(1.15);
+  }
+
+  100%{
+    transform:translateX(-50%) scale(1);
+  }
+
+}
+
+
+/* =================================
+   团圆奖励
+================================= */
+
+#rewardPopup{
+
+  position:absolute;
+
+  inset:0;
+
+  z-index:10000;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  pointer-events:none;
+
+  opacity:0;
+
+  visibility:hidden;
+
+}
+
+
+/* 奖励出现 */
+#rewardPopup.show{
+
+  opacity:1;
+
+  visibility:visible;
+
+  pointer-events:auto;
+
+  animation:rewardAppear 1s ease forwards;
+
+}
+
+
+/* 半透明背景 */
+#rewardPopup::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,225,130,.22),
+      rgba(4,13,40,.72) 55%,
+      rgba(2,7,25,.88)
+    );
+
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+
+}
+
+
+/* 中央光晕 */
+.rewardGlow{
+
+  position:absolute;
+
+  width:520px;
+  height:520px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,244,175,.38) 0%,
+      rgba(255,215,100,.20) 30%,
+      rgba(255,190,60,.08) 50%,
+      transparent 72%
+    );
+
+  filter:blur(10px);
+
+  animation:
+    rewardGlowPulse 2.5s ease-in-out infinite;
+
+}
+
+
+/* 奖励主体 */
+.rewardContent{
+
+  position:relative;
+
+  z-index:2;
+
+  width:78%;
+
+  padding:42px 28px 35px;
+
+  text-align:center;
+
+  border-radius:36px;
+
+  border:1px solid rgba(255,238,180,.65);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(30,50,92,.88),
+      rgba(8,22,55,.92)
+    );
+
+  box-shadow:
+
+    0 20px 70px rgba(0,0,0,.55),
+
+    0 0 30px rgba(255,225,130,.28),
+
+    0 0 80px rgba(255,195,70,.18),
+
+    inset 0 0 35px rgba(255,225,130,.08);
+
+  transform:scale(.65);
+
+  opacity:0;
+
+}
+
+
+/* 奖励主体出现动画 */
+#rewardPopup.show .rewardContent{
+
+  animation:
+    rewardCardAppear .9s cubic-bezier(.17,.89,.32,1.25) .15s forwards;
+
+}
+
+
+/* 月亮 */
+.rewardMoon{
+
+  position:absolute;
+
+  top:-46px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  font-size:76px;
+
+  filter:
+    drop-shadow(0 0 15px rgba(255,240,170,.8))
+    drop-shadow(0 0 35px rgba(255,210,80,.5));
+
+  animation:
+    rewardMoonFloat 2.5s ease-in-out infinite;
+
+}
+
+
+/* 月饼 */
+.rewardCake{
+
+  font-size:78px;
+
+  margin-bottom:10px;
+
+  filter:
+    drop-shadow(0 0 12px rgba(255,215,100,.7))
+    drop-shadow(0 0 30px rgba(255,180,60,.35));
+
+  animation:
+    rewardCakePop 1.2s ease .35s both,
+    rewardCakeFloat 2.2s ease-in-out 1.5s infinite;
+
+}
+
+
+/* 团圆奖励标题 */
+.rewardTitle{
+
+  color:#fff0ad;
+
+  font-size:40px;
+
+  font-weight:700;
+
+  letter-spacing:6px;
+
+  text-shadow:
+    0 0 10px rgba(255,230,130,.75),
+    0 3px 12px rgba(0,0,0,.65);
+
+}
+
+
+/* 副标题 */
+.rewardText{
+
+  margin-top:15px;
+
+  color:rgba(255,255,255,.94);
+
+  font-size:17px;
+
+  letter-spacing:2px;
+
+  line-height:1.6;
+
+}
+
+
+/* 爱心 */
+.rewardHeart{
+
+  margin-top:18px;
+
+  color:#ff8290;
+
+  font-size:28px;
+
+  animation:
+    heartBeat 1.2s ease-in-out infinite;
+
+}
+
+
+/* =================================
+   奖励动画
+================================= */
+
+@keyframes rewardAppear{
+
+  0%{
+    opacity:0;
+  }
+
+  100%{
+    opacity:1;
+  }
+
+}
+
+
+@keyframes rewardCardAppear{
+
+  0%{
+    opacity:0;
+    transform:scale(.55) translateY(40px);
+  }
+
+  60%{
+    opacity:1;
+    transform:scale(1.05) translateY(-8px);
+  }
+
+  100%{
+    opacity:1;
+    transform:scale(1) translateY(0);
+  }
+
+}
+
+
+@keyframes rewardGlowPulse{
+
+  0%,100%{
+    transform:scale(.85);
+    opacity:.55;
+  }
+
+  50%{
+    transform:scale(1.15);
+    opacity:1;
+  }
+
+}
+
+
+@keyframes rewardMoonFloat{
+
+  0%,100%{
+    transform:translateX(-50%) translateY(0);
+  }
+
+  50%{
+    transform:translateX(-50%) translateY(-12px);
+  }
+
+}
+
+
+@keyframes rewardCakePop{
+
+  0%{
+    opacity:0;
+    transform:scale(.2) rotate(-20deg);
+  }
+
+  60%{
+    opacity:1;
+    transform:scale(1.2) rotate(8deg);
+  }
+
+  100%{
+    opacity:1;
+    transform:scale(1) rotate(0);
+  }
+
+}
+
+
+@keyframes rewardCakeFloat{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-8px);
+  }
+
+}
+
+  
 /* No desktop layout and no landscape layout:
    the Reno12 portrait canvas remains the design target. */
 </style>
@@ -309,7 +705,33 @@ body{
      style="position:absolute!important;z-index:9999!important;left:8px!important;top:463px!important;width:30px!important;height:25px!important;background:red!important;border:5px solid yellow!important;"
      onclick="collectMooncake(3)">
 </div>
+<!-- 月饼收集计数 -->
+<div id="collectionCount">
+  找到🥮个数：0/3
+</div>
 
+<!-- 团圆奖励 -->
+<div id="rewardPopup">
+  <div class="rewardGlow"></div>
+
+  <div class="rewardContent">
+    <div class="rewardMoon">🌕</div>
+    <div class="rewardCake">🥮</div>
+
+    <div class="rewardTitle">
+      团圆奖励
+    </div>
+
+    <div class="rewardText">
+      三个月饼全部找到啦！
+    </div>
+
+    <div class="rewardHeart">
+      ❤
+    </div>
+  </div>
+</div>
+  
   <div class="hint">✦ 月圆 · 花香 · 灯暖 · 团圆 ✦</div>
 
   <div class="greeting">
@@ -336,28 +758,57 @@ function collectMooncake(number){
   /* 点击后出现光晕 */
   target.classList.add("collected");
 
-  /* 当前已经找到的不同月饼数量 */
-  const count = collectedMooncakes.size;
 
-  console.log("已经找到 " + count + " / 3 个不同的月饼");
+  /* =========================
+     更新收集数量
+  ========================= */
 
-  /* 三个不同的月饼全部找到 */
+  const count =
+    collectedMooncakes.size;
+
+  const counter =
+    document.getElementById("collectionCount");
+
+  counter.textContent =
+    "找到🥮个数：" + count + "/3";
+
+
+  /* 数字变化动画 */
+  counter.classList.remove("update");
+
+  /* 强制浏览器重新计算动画 */
+  void counter.offsetWidth;
+
+  counter.classList.add("update");
+
+
+  /* =========================
+     三个不同月饼全部找到
+  ========================= */
+
   if(count === 3){
 
-    /* 稍微延迟，让第三个月饼的光晕先出现 */
     setTimeout(function(){
 
       finalJudgement();
 
-    }, 500);
+    }, 700);
+
   }
+
 }
 
 
-/* 最终判定 */
+/* =============================
+   最终判定
+============================= */
+
 function finalJudgement(){
 
-  alert("🎉 恭喜你！\n三个不同的月饼都找到了！");
+  const reward =
+    document.getElementById("rewardPopup");
+
+  reward.classList.add("show");
 
 }
 </script>
