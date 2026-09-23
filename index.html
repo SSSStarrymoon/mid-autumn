@@ -740,19 +740,41 @@ body{
   </div>
 </div>
 <script>
+
+/* =================================
+   游戏状态
+================================= */
+
+/* 本次游戏已经找到的不同月饼 */
 const collectedMooncakes = new Set();
+
+/* 游戏是否已经彻底结束 */
+let gameFinished = false;
+
+/* 是否已经进入“3秒后等待点击”状态 */
+let waitingForFinalClick = false;
+
+
+/* =================================
+   点击月饼
+================================= */
 
 function collectMooncake(number){
 
-  const target =
-    document.querySelector(".mooncake" + number);
+  /* 游戏已经结束，直接禁止操作 */
+  if(gameFinished){
+    return;
+  }
 
-  /* 已经点击过，不再重复触发 */
+  /* 已经点击过这个月饼，不重复计数 */
   if(collectedMooncakes.has(number)){
     return;
   }
 
-  /* 记录这个月饼 */
+  const target =
+    document.querySelector(".mooncake" + number);
+
+  /* 记录这个不同的月饼 */
   collectedMooncakes.add(number);
 
   /* 点击后出现光晕 */
@@ -760,7 +782,7 @@ function collectMooncake(number){
 
 
   /* =========================
-     更新收集数量
+     更新计数
   ========================= */
 
   const count =
@@ -776,7 +798,6 @@ function collectMooncake(number){
   /* 数字变化动画 */
   counter.classList.remove("update");
 
-  /* 强制浏览器重新计算动画 */
   void counter.offsetWidth;
 
   counter.classList.add("update");
@@ -799,18 +820,130 @@ function collectMooncake(number){
 }
 
 
-/* =============================
+/* =================================
    最终判定
-============================= */
+================================= */
 
 function finalJudgement(){
+
+  /* 防止重复触发 */
+  if(gameFinished){
+    return;
+  }
 
   const reward =
     document.getElementById("rewardPopup");
 
+  /* 显示团圆奖励 */
   reward.classList.add("show");
 
+
+  /*
+     3 秒后进入“等待点击”状态
+  */
+
+  setTimeout(function(){
+
+    waitingForFinalClick = true;
+
+  }, 3000);
+
 }
+
+
+/* =================================
+   点击任意区域 → 回到初始页面
+================================= */
+
+document.addEventListener("click", function(){
+
+  /* 还没有到3秒，不执行 */
+  if(!waitingForFinalClick){
+    return;
+  }
+
+  /* 防止重复执行 */
+  if(gameFinished){
+    return;
+  }
+
+  /* 游戏正式结束 */
+  gameFinished = true;
+
+  /* 保存结束状态 */
+  sessionStorage.setItem(
+    "moonGameFinished",
+    "true"
+  );
+
+
+  /* 回到初始页面 */
+  resetToInitialPage();
+
+});
+
+
+/* =================================
+   回到初始页面
+================================= */
+
+function resetToInitialPage(){
+
+  /* 隐藏最终奖励 */
+  const reward =
+    document.getElementById("rewardPopup");
+
+  reward.classList.remove("show");
+
+
+  /* 清除所有月饼的发光状态 */
+  document
+    .querySelectorAll(".mooncake-hotspot")
+    .forEach(function(cake){
+
+      cake.classList.remove("collected");
+
+    });
+
+
+  /* 计数恢复为初始状态 */
+  const counter =
+    document.getElementById("collectionCount");
+
+  counter.textContent =
+    "找到🥮个数：3/3";
+
+
+  /*
+     注意：
+     collectedMooncakes 不重新清空。
+     
+     因为游戏已经结束，
+     后续不能再次进行游戏。
+  */
+
+}
+
+
+/* =================================
+   页面加载时检查游戏是否已经结束
+================================= */
+
+if(
+  sessionStorage.getItem("moonGameFinished")
+  === "true"
+){
+
+  gameFinished = true;
+
+  /*
+     游戏已经结束：
+     保持初始页面显示，
+     但不再允许进行游戏。
+  */
+
+}
+
 </script>
 </body>
 </html>
