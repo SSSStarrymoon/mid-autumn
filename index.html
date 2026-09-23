@@ -209,25 +209,32 @@ body{
   content:"";
 
   position:absolute;
-  left:5%;
-  top:5%;
-  width:90%;
-  height:90%;
+
+  /* 光晕扩大到点击区域之外 */
+  left:-30%;
+  top:-30%;
+  width:160%;
+  height:160%;
 
   border-radius:50%;
 
   background:radial-gradient(
     circle,
-    rgba(255,240,160,.45) 0%,
-    rgba(255,210,90,.25) 35%,
-    rgba(255,190,50,.12) 55%,
+    rgba(255,250,190,.90) 0%,
+    rgba(255,225,100,.55) 35%,
+    rgba(255,195,50,.28) 55%,
     transparent 75%
   );
 
+  /* 柔和模糊 */
+  filter:blur(14px);
+
+  /* 外围大范围光晕 */
   box-shadow:
-    0 0 20px rgba(255,225,120,.7),
-    0 0 45px rgba(255,195,60,.5),
-    0 0 80px rgba(255,180,40,.3);
+    0 0 30px rgba(255,240,150,.95),
+    0 0 70px rgba(255,215,90,.75),
+    0 0 120px rgba(255,185,40,.55),
+    0 0 180px rgba(255,170,30,.30);
 
   animation:moonshine 1.2s ease-in-out infinite alternate;
 
@@ -239,12 +246,12 @@ body{
 @keyframes moonshine{
   from{
     opacity:.55;
-    transform:scale(.95);
+    transform:scale(.90);
   }
 
   to{
     opacity:1;
-    transform:scale(1.08);
+    transform:scale(1.12);
   }
 }
 
