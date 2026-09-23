@@ -210,7 +210,7 @@ body{
   border:3px solid rgba(255,255,0,.9);
   border-radius:50%;
 }
-}
+
 
 /* 三个月饼的位置 */
 .mooncake1{
@@ -335,48 +335,21 @@ const collectedMooncakes = new Set();
 
 function collectMooncake(number){
 
-  const target =
-    document.querySelector(".mooncake" + number);
+  const target = document.querySelector(".mooncake" + number);
 
-  /* 同一个月饼不能重复计算 */
+  /* 同一个月饼不能重复点击 */
   if(collectedMooncakes.has(number)){
     return;
   }
 
-  /* 记录这个月饼已经被找到 */
+  /* 记录已经点击 */
   collectedMooncakes.add(number);
 
-  /* 让这个月饼持续发光 */
+  /* 点击后发光 */
   target.classList.add("collected");
 
-  /* 更新收集数量 */
-  const count = collectedMooncakes.size;
-
-  const progress =
-    document.getElementById("collectionProgress");
-
-  progress.textContent =
-    "🥮 月饼收集 " + count + "/3";
-
-  progress.classList.add("show");
-
-  clearTimeout(window.progressTimer);
-
-  window.progressTimer = setTimeout(function(){
-    progress.classList.remove("show");
-  },2000);
-
-  /* 三个不同的月饼全部点击 */
-  if(count === 3){
-
-    setTimeout(function(){
-
-      document
-        .getElementById("rewardPopup")
-        .classList.add("show");
-
-    },500);
-  }
+  console.log("点击了月饼：" + number);
+  console.log("当前已找到：" + collectedMooncakes.size + "/3");
 }
 </script>
 </body>
