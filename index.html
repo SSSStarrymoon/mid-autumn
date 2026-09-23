@@ -201,14 +201,17 @@ body{
   color:#ff7b88;
   animation:heartBeat 1.2s ease-in-out infinite;
 }
+
 .mooncake-hotspot{
-  position:absolute;
-  z-index:8;
-  cursor:pointer;
-  /* 测试时显示点击区域 */
-  background:rgba(255,0,0,.25);
-  border:3px solid rgba(255,255,0,.9);
-  border-radius:50%;
+  position:absolute !important;
+  z-index:999 !important;
+
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+
+  background:red !important;
+  border:5px solid yellow !important;
 }
 
 
