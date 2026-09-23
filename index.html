@@ -335,6 +335,30 @@ function collectMooncake(number){
 
   /* 点击后出现光晕 */
   target.classList.add("collected");
+
+  /* 当前已经找到的不同月饼数量 */
+  const count = collectedMooncakes.size;
+
+  console.log("已经找到 " + count + " / 3 个不同的月饼");
+
+  /* 三个不同的月饼全部找到 */
+  if(count === 3){
+
+    /* 稍微延迟，让第三个月饼的光晕先出现 */
+    setTimeout(function(){
+
+      finalJudgement();
+
+    }, 500);
+  }
+}
+
+
+/* 最终判定 */
+function finalJudgement(){
+
+  alert("🎉 恭喜你！\n三个不同的月饼都找到了！");
+
 }
 </script>
 </body>
