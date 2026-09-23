@@ -201,7 +201,87 @@ body{
   color:#ff7b88;
   animation:heartBeat 1.2s ease-in-out infinite;
 }
+.mooncake-hotspot{
+  position:absolute;
+  z-index:8;
+  cursor:pointer;
+  background:transparent;
+}
 
+/* 三个月饼的位置 */
+.mooncake1{
+  left:100px;
+  top:1300px;
+  width:250px;
+  height:250px;
+}
+
+.mooncake2{
+  left:415px;
+  top:1300px;
+  width:250px;
+  height:250px;
+}
+
+.mooncake3{
+  left:730px;
+  top:1300px;
+  width:250px;
+  height:250px;
+}
+
+
+/* 点击后的发光效果 */
+.mooncake-hotspot.collected::before{
+  content:"";
+
+  position:absolute;
+  left:5%;
+  top:5%;
+  width:90%;
+  height:90%;
+
+  border-radius:50%;
+
+  background:radial-gradient(
+    circle,
+    rgba(255,240,160,.45) 0%,
+    rgba(255,210,90,.25) 35%,
+    rgba(255,190,50,.12) 55%,
+    transparent 75%
+  );
+
+  box-shadow:
+    0 0 20px rgba(255,225,120,.7),
+    0 0 45px rgba(255,195,60,.5),
+    0 0 80px rgba(255,180,40,.3);
+
+  animation:moonshine 1.2s ease-in-out infinite alternate;
+
+  pointer-events:none;
+}
+
+
+/* 发光呼吸效果 */
+@keyframes moonshine{
+  from{
+    opacity:.55;
+    transform:scale(.95);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1.08);
+  }
+}
+
+
+/* 已经点击的月饼不再重复触发 */
+.mooncake-hotspot.collected{
+  pointer-events:none;
+}
+
+  
 @keyframes slowZoom{
   from{transform:scale(1.008)}
   to{transform:scale(1.025)}
@@ -235,6 +315,9 @@ body{
   <div class="lantern l2"></div>
   <div class="lantern l3"></div>
   <div class="vignette"></div>
+  <div class="mooncake-hotspot mooncake1" onclick="collectMooncake(1)"></div>
+  <div class="mooncake-hotspot mooncake2" onclick="collectMooncake(2)"></div>
+  <div class="mooncake-hotspot mooncake3" onclick="collectMooncake(3)"></div>
 
   <div class="hint">✦ 月圆 · 花香 · 灯暖 · 团圆 ✦</div>
 
@@ -243,5 +326,54 @@ body{
     <p>愿你所念皆如愿，所行皆坦途 · 月圆人团圆</p>
   </div>
 </div>
+<script>
+const collectedMooncakes = new Set();
+
+function collectMooncake(number){
+
+  const target =
+    document.querySelector(".mooncake" + number);
+
+  /* 同一个月饼不能重复计算 */
+  if(collectedMooncakes.has(number)){
+    return;
+  }
+
+  /* 记录这个月饼已经被找到 */
+  collectedMooncakes.add(number);
+
+  /* 让这个月饼持续发光 */
+  target.classList.add("collected");
+
+  /* 更新收集数量 */
+  const count = collectedMooncakes.size;
+
+  const progress =
+    document.getElementById("collectionProgress");
+
+  progress.textContent =
+    "🥮 月饼收集 " + count + "/3";
+
+  progress.classList.add("show");
+
+  clearTimeout(window.progressTimer);
+
+  window.progressTimer = setTimeout(function(){
+    progress.classList.remove("show");
+  },2000);
+
+  /* 三个不同的月饼全部点击 */
+  if(count === 3){
+
+    setTimeout(function(){
+
+      document
+        .getElementById("rewardPopup")
+        .classList.add("show");
+
+    },500);
+  }
+}
+</script>
 </body>
 </html>
