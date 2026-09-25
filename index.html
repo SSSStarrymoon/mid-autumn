@@ -1096,60 +1096,60 @@ function resetToInitialPage(){
 
 function startEnergyStage(){
 
-  /* =========================
-     第二阶段：创建测试热区
-  ========================= */
+  /* =================================
+     第二阶段测试热区
+     先完全脱离 .scene
+  ================================= */
 
   let hotspot = document.getElementById("energyHotspot");
 
-  /* 如果不存在，就重新创建 */
   if(!hotspot){
 
     hotspot = document.createElement("div");
 
     hotspot.id = "energyHotspot";
 
-    hotspot.onclick = chargeEnergy;
-
-    document.querySelector(".scene").appendChild(hotspot);
+    document.body.appendChild(hotspot);
 
   }
 
-  /* =========================
-     强制设置测试热区
-  ========================= */
+  /* 强制固定到整个浏览器视口 */
+  hotspot.style.position = "fixed";
 
-  hotspot.style.position = "absolute";
-  hotspot.style.left = "40px";
-  hotspot.style.top = "400px";
-  hotspot.style.width = "280px";
-  hotspot.style.height = "280px";
+  hotspot.style.left = "100px";
+  hotspot.style.top = "100px";
+
+  hotspot.style.width = "300px";
+  hotspot.style.height = "300px";
 
   hotspot.style.display = "block";
   hotspot.style.visibility = "visible";
   hotspot.style.opacity = "1";
 
-  hotspot.style.zIndex = "999999";
+  hotspot.style.zIndex = "2147483647";
 
-  hotspot.style.background = "rgba(0,0,255,0.6)";
+  hotspot.style.background = "rgba(0,0,255,0.7)";
   hotspot.style.border = "10px solid blue";
 
   hotspot.style.boxSizing = "border-box";
+
   hotspot.style.pointerEvents = "auto";
   hotspot.style.cursor = "pointer";
 
+  hotspot.onclick = function(){
+    chargeEnergy();
+  };
 
-  /* =========================
+
+  /* =================================
      能量条
-  ========================= */
+  ================================= */
 
   const bar =
     document.getElementById("energyBar");
 
   if(bar){
-
     bar.style.display = "block";
-
   }
 
 }
