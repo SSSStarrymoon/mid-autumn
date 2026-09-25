@@ -772,6 +772,338 @@ body{
     0 2px 6px rgba(0,0,0,.75);
 
 }
+
+/* =========================================================
+   最终奖励窗口
+   ========================================================= */
+
+#finalRewardPopup{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:2147483646 !important;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+
+  transition:
+    opacity .45s ease,
+    visibility .45s ease;
+}
+
+#finalRewardPopup.show{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+
+/* ---------- 背景 ---------- */
+
+.finalRewardBackdrop{
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,220,130,.18) 0%,
+      rgba(10,20,55,.72) 45%,
+      rgba(3,8,25,.88) 100%
+    );
+
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+
+
+/* ---------- 主卡片 ---------- */
+
+.finalRewardCard{
+  position:relative;
+
+  width:78%;
+  max-width:360px;
+
+  padding:34px 24px 27px;
+
+  box-sizing:border-box;
+
+  text-align:center;
+
+  border-radius:24px;
+
+  border:1px solid rgba(255,220,140,.75);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(27,40,83,.97),
+      rgba(8,20,52,.97)
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 15px 45px rgba(0,0,0,.55),
+    0 0 45px rgba(255,205,100,.18);
+
+  transform:
+    translateY(25px)
+    scale(.88);
+
+  opacity:0;
+
+  transition:
+    transform .55s cubic-bezier(.2,.85,.25,1.2),
+    opacity .4s ease;
+
+  overflow:hidden;
+}
+
+#finalRewardPopup.show .finalRewardCard{
+  transform:
+    translateY(0)
+    scale(1);
+
+  opacity:1;
+}
+
+
+/* ---------- 卡片内部金色光晕 ---------- */
+
+.finalRewardGlow{
+  position:absolute;
+
+  width:220px;
+  height:220px;
+
+  left:50%;
+  top:0;
+
+  transform:translate(-50%,-55%);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,220,120,.25) 0%,
+      rgba(255,220,120,.08) 35%,
+      transparent 70%
+    );
+
+  pointer-events:none;
+}
+
+
+/* ---------- 月亮 ---------- */
+
+.finalRewardMoon{
+  position:relative;
+
+  margin-top:-8px;
+
+  font-size:30px;
+
+  line-height:1;
+
+  filter:
+    drop-shadow(0 0 10px rgba(255,220,120,.55));
+}
+
+
+/* ---------- 围巾图标 ---------- */
+
+.finalRewardIcon{
+  position:relative;
+
+  margin-top:10px;
+
+  font-size:56px;
+
+  line-height:1;
+
+  filter:
+    drop-shadow(0 5px 12px rgba(0,0,0,.35));
+
+  animation:
+    rewardFloat 2.4s ease-in-out infinite;
+}
+
+@keyframes rewardFloat{
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-6px);
+  }
+}
+
+
+/* ---------- 标题 ---------- */
+
+.finalRewardTitle{
+  position:relative;
+
+  margin-top:16px;
+
+  color:#ffe7a3;
+
+  font-size:27px;
+  font-weight:700;
+
+  letter-spacing:3px;
+
+  text-shadow:
+    0 0 12px rgba(255,210,110,.25);
+}
+
+
+/* ---------- 副标题 ---------- */
+
+.finalRewardSubtitle{
+  position:relative;
+
+  margin-top:9px;
+
+  color:rgba(255,245,215,.9);
+
+  font-size:14px;
+
+  line-height:1.7;
+
+  letter-spacing:1px;
+}
+
+
+/* ---------- 分隔线 ---------- */
+
+.finalRewardDivider{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:9px;
+
+  margin:19px 10px 16px;
+
+  color:#f5d58b;
+
+  font-size:12px;
+}
+
+.finalRewardDivider i{
+  display:block;
+
+  width:80px;
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(245,213,139,.7),
+      transparent
+    );
+}
+
+
+/* ---------- 祝福文字 ---------- */
+
+.finalRewardMessage{
+  position:relative;
+
+  color:rgba(255,245,225,.88);
+
+  font-size:14px;
+
+  line-height:2;
+
+  letter-spacing:.5px;
+}
+
+
+/* ---------- 按钮 ---------- */
+
+.finalRewardButton{
+  position:relative;
+
+  width:78%;
+
+  margin:24px auto 0;
+
+  padding:11px 10px;
+
+  box-sizing:border-box;
+
+  border-radius:999px;
+
+  color:#5b3b13;
+
+  font-size:15px;
+  font-weight:700;
+
+  letter-spacing:2px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffe9a8,
+      #f5ca70
+    );
+
+  box-shadow:
+    0 5px 16px rgba(0,0,0,.25),
+    0 0 15px rgba(255,215,120,.18);
+
+  cursor:pointer;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.finalRewardButton:active{
+  transform:scale(.95);
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.25);
+}
+
+
+/* ---------- 手机屏幕进一步适配 ---------- */
+
+@media (max-width:380px){
+
+  .finalRewardCard{
+    width:82%;
+    padding:30px 20px 24px;
+  }
+
+  .finalRewardTitle{
+    font-size:24px;
+  }
+
+  .finalRewardSubtitle{
+    font-size:13px;
+  }
+
+  .finalRewardMessage{
+    font-size:13px;
+  }
+
+  .finalRewardIcon{
+    font-size:50px;
+  }
+
+}
   
   
 /* No desktop layout and no landscape layout:
@@ -1258,14 +1590,70 @@ function chargeEnergy(){
 
 
 function showScarfReward(){
+  // 防止重复创建
+  let popup = document.getElementById("finalRewardPopup");
 
+  if(!popup){
+    popup = document.createElement("div");
+    popup.id = "finalRewardPopup";
 
-  alert("恭喜你再次获得奖励 🧣");
+    popup.innerHTML = `
+      <div class="finalRewardBackdrop"></div>
 
+      <div class="finalRewardCard">
 
+        <div class="finalRewardGlow"></div>
+
+        <div class="finalRewardMoon">🌕</div>
+
+        <div class="finalRewardIcon">🧣</div>
+
+        <div class="finalRewardTitle">
+          恭喜你！
+        </div>
+
+        <div class="finalRewardSubtitle">
+          收集满满能量，获得一份团圆心意
+        </div>
+
+        <div class="finalRewardDivider">
+          <span>✦</span>
+          <i></i>
+          <span>✦</span>
+        </div>
+
+        <div class="finalRewardMessage">
+          愿这一轮明月，照见你的心愿<br>
+          愿这一份温暖，陪你度过每一个团圆的时刻
+        </div>
+
+        <div class="finalRewardButton" onclick="closeFinalReward(event)">
+          收下祝福
+        </div>
+
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+  }
+
+  // 显示窗口
+  requestAnimationFrame(() => {
+    popup.classList.add("show");
+  });
 }
 
+function closeFinalReward(event){
+  if(event){
+    event.stopPropagation();
+  }
 
+  const popup = document.getElementById("finalRewardPopup");
+
+  if(popup){
+    popup.classList.remove("show");
+  }
+}
 
 </script>
 </body>
