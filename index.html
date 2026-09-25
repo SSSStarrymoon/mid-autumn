@@ -795,26 +795,7 @@ body{
   <!-- ==========================================
      第二阶段：新的点击热区
      ========================================== -->
-<div
-  id="energyHotspot"
-  onclick="chargeEnergy()"
-  style="
-    position:absolute !important;
-    z-index:999999 !important;
-    left:50px !important;
-    top:400px !important;
-    width:280px !important;
-    height:280px !important;
-    display:block !important;
-    visibility:visible !important;
-    opacity:1 !important;
-    background:rgba(0,0,255,0.6) !important;
-    border:10px solid blue !important;
-    box-sizing:border-box !important;
-    cursor:pointer !important;
-    pointer-events:auto !important;
-  "
-></div>
+
 
   
 <div class="mooncake-hotspot mooncake1"
@@ -1114,20 +1095,63 @@ function resetToInitialPage(){
 
 
 function startEnergyStage(){
-  const hotspot = document.getElementById("energyHotspot");
-  const bar = document.getElementById("energyBar");
 
-  if(hotspot){
-    hotspot.style.display = "block";
-    hotspot.style.visibility = "visible";
-    hotspot.style.opacity = "1";
-    hotspot.style.pointerEvents = "auto";
-    hotspot.style.zIndex = "999999";
+  /* =========================
+     第二阶段：创建测试热区
+  ========================= */
+
+  let hotspot = document.getElementById("energyHotspot");
+
+  /* 如果不存在，就重新创建 */
+  if(!hotspot){
+
+    hotspot = document.createElement("div");
+
+    hotspot.id = "energyHotspot";
+
+    hotspot.onclick = chargeEnergy;
+
+    document.querySelector(".scene").appendChild(hotspot);
+
   }
+
+  /* =========================
+     强制设置测试热区
+  ========================= */
+
+  hotspot.style.position = "absolute";
+  hotspot.style.left = "400px";
+  hotspot.style.top = "400px";
+  hotspot.style.width = "280px";
+  hotspot.style.height = "280px";
+
+  hotspot.style.display = "block";
+  hotspot.style.visibility = "visible";
+  hotspot.style.opacity = "1";
+
+  hotspot.style.zIndex = "999999";
+
+  hotspot.style.background = "rgba(0,0,255,0.6)";
+  hotspot.style.border = "10px solid blue";
+
+  hotspot.style.boxSizing = "border-box";
+  hotspot.style.pointerEvents = "auto";
+  hotspot.style.cursor = "pointer";
+
+
+  /* =========================
+     能量条
+  ========================= */
+
+  const bar =
+    document.getElementById("energyBar");
 
   if(bar){
+
     bar.style.display = "block";
+
   }
+
 }
 
 
