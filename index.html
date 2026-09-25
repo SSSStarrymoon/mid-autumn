@@ -800,18 +800,21 @@ body{
   onclick="chargeEnergy()"
   style="
     position:absolute !important;
-    z-index:99999 !important;
+    z-index:999999 !important;
     left:400px !important;
     top:400px !important;
     width:280px !important;
     height:280px !important;
     display:block !important;
-    background:red !important;
-    border:10px solid yellow !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    background:rgba(0,0,255,0.6) !important;
+    border:10px solid blue !important;
     box-sizing:border-box !important;
     cursor:pointer !important;
+    pointer-events:auto !important;
   "
-></div> 
+></div>
 
   
 <div class="mooncake-hotspot mooncake1"
@@ -1111,38 +1114,21 @@ function resetToInitialPage(){
 
 
 function startEnergyStage(){
-
-
-
-  const hotspot =
-    document.getElementById("energyHotspot");
-
-
-  const bar =
-    document.getElementById("energyBar");
-
-
+  const hotspot = document.getElementById("energyHotspot");
+  const bar = document.getElementById("energyBar");
 
   if(hotspot){
-
-    hotspot.style.display="block";
-
+    hotspot.style.display = "block";
+    hotspot.style.visibility = "visible";
+    hotspot.style.opacity = "1";
+    hotspot.style.pointerEvents = "auto";
+    hotspot.style.zIndex = "999999";
   }
-
-
 
   if(bar){
-
-    bar.style.display="block";
-
+    bar.style.display = "block";
   }
-
-
-
 }
-
-
-
 
 
 
